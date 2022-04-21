@@ -17,8 +17,8 @@
 
     <!-- BEGIN: Vendor CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/vendors.min.css') }}">
-    <!-- END: Vendor CSS-->
 
+    <!-- END: Vendor CSS-->
     <!-- BEGIN: Theme CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/bootstrap.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/bootstrap-extended.css') }}">
@@ -27,13 +27,11 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/themes/dark-layout.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/themes/bordered-layout.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/themes/semi-dark-layout.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/boxicons.css') }}">
+    {{-- <link rel="stylesheet" type="text/css" href="{{ asset('css/boxicons.css') }}"> --}}
 
     <!-- BEGIN: Page CSS-->
     <link rel="stylesheet" type="text/css"
         href="{{ asset('app-assets/css/core/menu/menu-types/vertical-menu.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/plugins/forms/form-validation.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/pages/authentication.css') }}">
     <!-- END: Page CSS-->
 
     <!-- BEGIN: Custom CSS-->
@@ -43,28 +41,32 @@
 
     {{-- Included Vendors --}}
     @include('vendors.toaster')
-    @include('vendors.sweet-alerts')
     {{-- Extended CSS --}}
 
     @stack('extended-css')
     @livewireStyles
+    @livewireScripts
 
 </head>
 <!-- END: Head-->
 
 <!-- BEGIN: Body-->
 
-<body class="vertical-layout vertical-menu-modern blank-page navbar-floating footer-static " data-open="click"
-    data-menu="vertical-menu-modern" data-col="blank-page">
+<body class="vertical-layout vertical-menu-modern  navbar-floating footer-static  " data-open="click"
+    data-menu="vertical-menu-modern" data-col="">
+    <x-nav-bar-component></x-nav-bar-component>
+    <x-side-bar-component></x-side-bar-component>
 
     <!-- BEGIN: Content-->
-    <div class="app-content content ">
+    <div class="app-content content">
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
-        <div class="content-wrapper">
+        <div class="content-wrapper container-xxl p-0">
             <div class="content-header row">
             </div>
             <div class="content-body">
+
+                <x-bread-crumb-component />
 
                 @yield('content')
 
@@ -73,25 +75,40 @@
     </div>
     <!-- END: Content-->
 
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
+
 
     <!-- BEGIN: Vendor JS-->
 
     <script src="{{ asset('app-assets/vendors/js/vendors.min.js') }}"></script>
     <!-- BEGIN Vendor JS-->
 
-    <!-- BEGIN: Page Vendor JS-->
-    <script src="{{ asset('app-assets/vendors/js/forms/validation/jquery.validate.min.js') }}"></script>
-    <!-- END: Page Vendor JS-->
-
     <!-- BEGIN: Theme JS-->
     <script src="{{ asset('app-assets/js/core/app-menu.js') }}"></script>
     <script src="{{ asset('app-assets/js/core/app.js') }}"></script>
     <!-- END: Theme JS-->
     <!-- END: Page JS-->
-    <script src="{{ asset('app-assets/js/scripts/extensions/ext-component-blockui.js') }}"></script>
-    <script src="{{ asset('app-assets/js/scripts/forms/form-validation.js') }}"></script>
     <script src="{{ asset('js/global.js') }}"></script>
     @include('vendors.window-load')
+    {{-- Extended js --}}
+    @stack('extended-js')
+
+    @if (session()->has('log-notify'))
+        <script>
+            setTimeout(function() {
+                toastr['success'](
+                    'You have successfully logged in to {{ env('APP_NAME') }}. Now you can start to explore!',
+                    '👋 Welcome {{ auth()->user()->name }}!', {
+                        closeButton: true,
+                        tapToDismiss: false,
+                        rtl: false
+                    }
+                );
+            }, 2000);
+        </script>
+    @endif
+
     <script>
         $(window).on('load', function() {
             if (feather) {
@@ -102,10 +119,6 @@
             }
         })
     </script>
-
-    {{-- Extended js --}}
-    @stack('extended-js')
-    @livewireScripts
 </body>
 <!-- END: Body-->
 

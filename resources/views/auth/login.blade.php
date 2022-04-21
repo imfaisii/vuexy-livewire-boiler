@@ -126,3 +126,6 @@
         </div>
     </div>
 @endsection
+@push('extended-js')
+    <script src="{{ asset('js/core/auth/loginForm.js') }}"></script>
+@endpush
