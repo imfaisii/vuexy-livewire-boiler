@@ -27,7 +27,6 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/themes/dark-layout.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/themes/bordered-layout.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/themes/semi-dark-layout.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/boxicons.css') }}">
 
     <!-- BEGIN: Page CSS-->
     <link rel="stylesheet" type="text/css"
@@ -43,12 +42,8 @@
 
     {{-- Included Vendors --}}
     @include('vendors.toaster')
-    @include('vendors.sweet-alerts')
-    {{-- Extended CSS --}}
 
     @stack('extended-css')
-    @livewireStyles
-
 </head>
 <!-- END: Head-->
 
@@ -90,7 +85,6 @@
     <!-- END: Page JS-->
     <script src="{{ asset('app-assets/js/scripts/extensions/ext-component-blockui.js') }}"></script>
     <script src="{{ asset('app-assets/js/scripts/forms/form-validation.js') }}"></script>
-    <script src="{{ asset('js/global.js') }}"></script>
     @include('vendors.window-load')
     <script>
         $(window).on('load', function() {
@@ -105,7 +99,6 @@
 
     {{-- Extended js --}}
     @stack('extended-js')
-    @livewireScripts
 </body>
 <!-- END: Body-->
 
